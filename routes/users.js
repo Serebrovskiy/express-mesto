@@ -1,49 +1,47 @@
 const router = require('express').Router();
 const path = require('path');
-const { getJsonFromFile } = require('../read-file')
+const getJsonFromFile = require('../read-file');
 
-const getAllUsers = (req, res) => {
-  return getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
+const getAllUsers = (req, res) => ({
+  return: getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
     .then((data) => {
       if (!data) {
         res
           .status(500)
-          .send('error')
+          .send({ message: 'Внутренняя ошибка сервера' });
         return;
       }
       res
         .status(200)
-        .send(data)
-    })
-}
+        .send(data);
+    }),
+});
 
-const getUserById = (req, res) => {
-  return getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
-    .then(data => {
+const getUserById = (req, res) => ({
+  return: getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
+    .then((data) => {
       if (!data) {
         res
           .status(500)
-          .send('error')
+          .send({ message: 'Внутренняя ошибка сервера' });
         return;
       }
-      const foundUser = data.find(u => u._id === req.params.id)
+      const foundUser = data.find((u) => u._id === req.params.id);
 
       if (!foundUser) {
         res
           .status(404)
-          .send({ "message": "Нет пользователя с таким id" })
+          .send({ message: 'Нет пользователя с таким id' });
         return;
       }
+
       res
         .status(200)
-        .send(foundUser)
+        .send(foundUser);
+    }),
+});
 
-    })
-}
+router.get('/:id', getUserById);
+router.get('/', getAllUsers);
 
-router.use('/users/:id', getUserById)
-router.use('/users', getAllUsers)
-
-module.exports = {
-  router: router
-}
+module.exports = router;
