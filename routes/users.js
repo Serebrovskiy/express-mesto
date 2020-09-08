@@ -2,8 +2,8 @@ const router = require('express').Router();
 const path = require('path');
 const getJsonFromFile = require('../read-file');
 
-const getAllUsers = (req, res) => ({
-  return: getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
+const getAllUsers = (req, res) => (
+  getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
     .then((data) => {
       if (!data) {
         res
@@ -14,11 +14,11 @@ const getAllUsers = (req, res) => ({
       res
         .status(200)
         .send(data);
-    }),
-});
+    })
+);
 
-const getUserById = (req, res) => ({
-  return: getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
+const getUserById = (req, res) => (
+  getJsonFromFile(path.join(__dirname, '..', 'data', 'users.json'))
     .then((data) => {
       if (!data) {
         res
@@ -38,8 +38,8 @@ const getUserById = (req, res) => ({
       res
         .status(200)
         .send(foundUser);
-    }),
-});
+    })
+);
 
 router.get('/:id', getUserById);
 router.get('/', getAllUsers);

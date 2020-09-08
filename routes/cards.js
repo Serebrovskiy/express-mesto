@@ -2,8 +2,8 @@ const router = require('express').Router();
 const path = require('path');
 const getJsonFromFile = require('../read-file');
 
-const getAllCards = (req, res) => ({
-  return: getJsonFromFile(path.join(__dirname, '..', 'data', 'cards.json'))
+const getAllCards = (req, res) => (
+  getJsonFromFile(path.join(__dirname, '..', 'data', 'cards.json'))
     .then((data) => {
       if (!data) {
         res
@@ -14,8 +14,8 @@ const getAllCards = (req, res) => ({
       res
         .status(200)
         .send(data);
-    }),
-});
+    })
+);
 
 router.get('/', getAllCards);
 
