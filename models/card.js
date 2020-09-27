@@ -14,7 +14,7 @@ const cardSchema = new mongoose.Schema({
     maxlength: 30,
     validate: {
       validator(value) {
-        return /^https?:\/\/(www\.)?\w+(-\w+)*(\.\w+(-\w+)*)*(\/.+)*/.test(value);
+        return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(value);
       },
       message: 'Введите правильный URL',
     },
